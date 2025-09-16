@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.rga.question_service.service.QuestionService;
 import com.rga.question_service.model.Question;
+import com.rga.question_service.model.QuestionWrapper;
+import com.rga.question_service.model.Response;
 
 import java.util.List;
 
@@ -29,6 +31,22 @@ public class QuestionController {
     @PostMapping("add")
     public ResponseEntity<String> addQuestion(@RequestBody Question question){
         return  questionService.addQuestion(question);
+    }
+
+    @GetMapping("generate")
+    public ResponseEntity<List<Integer>> getQuestionsForQuiz(@RequestParam String categoryName, @RequestParam Integer numQuestions ){
+        return questionService.getQuestionsForQuiz(categoryName, numQuestions);
+    }
+
+    @PostMapping("getQuestions")
+    public ResponseEntity<List<QuestionWrapper>> getQuestionsFromId(@RequestBody List<Integer> questionIds){
+        return questionService.getQuestionsFromId(questionIds);
+    }
+
+    @PostMapping("getScore")
+    public ResponseEntity<Integer> getScore(@RequestBody List<Response> responses){
+        
+        return questionService.getScore(responses);
     }
 
 }
